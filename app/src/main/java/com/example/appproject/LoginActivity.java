@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     TextView tx;
     EditText t;
     String user;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         if(savedInstanceState != null){
             if(savedInstanceState.getBoolean("Dialog") == true)
             {
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 Dialog_reg = promptsView;
                 AlertDialog.Builder builder
                         = new AlertDialog
-                        .Builder(MainActivity.this);
+                        .Builder(LoginActivity.this);
                 builder.setTitle("Register");
                 builder.setCancelable(false);
                 builder.setView(promptsView);
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder
                         = new AlertDialog
-                        .Builder(MainActivity.this);
+                        .Builder(LoginActivity.this);
                 builder.setTitle("OTP Request");
                 builder.setCancelable(false);
                 builder.setView(promptsView);
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 t.setText(savedInstanceState.getString("cpass2") );
                 AlertDialog.Builder builder
                         = new AlertDialog
-                        .Builder(MainActivity.this);
+                        .Builder(LoginActivity.this);
                 builder.setTitle("Reset Password");
                 builder.setCancelable(false);
                 builder.setView(promptsView);
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         Dialog_for = promptsView;
         AlertDialog.Builder builder
                 = new AlertDialog
-                .Builder(MainActivity.this);
+                .Builder(LoginActivity.this);
         builder.setTitle("OTP Request");
         builder.setCancelable(false);
         builder.setView(promptsView);
@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
         Dialog_ch = promptsView;
         AlertDialog.Builder builder
                 = new AlertDialog
-                .Builder(MainActivity.this);
+                .Builder(LoginActivity.this);
         builder.setTitle("Reset Password");
         builder.setCancelable(false);
         builder.setView(promptsView);
@@ -375,7 +375,7 @@ public class MainActivity extends AppCompatActivity {
         Dialog_reg = promptsView;
         AlertDialog.Builder builder
                 = new AlertDialog
-                .Builder(MainActivity.this);
+                .Builder(LoginActivity.this);
         builder.setTitle("Register");
         builder.setCancelable(false);
         builder.setView(promptsView);
