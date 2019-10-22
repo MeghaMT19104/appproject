@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -440,5 +441,10 @@ public class LoginActivity extends AppCompatActivity {
         alertDialog.show();
         is_Reg_active = alertDialog.isShowing();
 
+    }
+
+    public void login(View view) {
+        Intent i= new Intent(this,editprofile.class);
+        startActivity(i);
     }
 }

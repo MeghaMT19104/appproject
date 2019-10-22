@@ -104,6 +104,7 @@
             android:background="@drawable/buttonselection"
             android:padding="3dp"
             android:text="login"
+            android:onClick="login"
             android:textColor="#009688"
             android:textSize="17sp"
             android:textStyle="bold" />
