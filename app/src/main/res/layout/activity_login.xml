@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/imageView"
-        android:src="@drawable/logo"
+        android:src="@drawable/logofinal"
         android:layout_below="@+id/textView"
         android:layout_above="@+id/login_layout"
         android:layout_centerHorizontal="true" />
@@ -90,7 +90,7 @@
                 android:autoLink="all"
                 android:clickable="true"
                 android:text="forgot Password?"
-                android:onClick="forgot"
+
 
                 android:textSize="14sp" />
 

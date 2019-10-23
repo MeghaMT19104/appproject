@@ -1,5 +1,6 @@
 package com.example.appproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -170,5 +171,10 @@ public class editprofile extends AppCompatActivity
         Button bt = findViewById(R.id.butonSave);
         bt.setVisibility(View.VISIBLE);
 
+    }
+
+    public void send(View view) {
+        Intent inte = new Intent(this,editprofile.class);
+        startActivity(inte);
     }
 }
