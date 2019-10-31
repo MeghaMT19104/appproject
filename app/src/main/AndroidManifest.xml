@@ -12,7 +12,10 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+
         <activity android:name=".Register"></activity>
+
         <activity
             android:name=".editprofile"
             android:label="@string/title_activity_editprofile"
@@ -26,6 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

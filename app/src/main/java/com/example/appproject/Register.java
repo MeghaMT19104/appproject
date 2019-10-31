@@ -1,7 +1,4 @@
 package com.example.appproject;
-
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -104,7 +101,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     Toast.makeText(getApplicationContext(),"User Regsitered Successfully",Toast.LENGTH_SHORT).show();
                     //Store the data to database
                     Userdetails user= new Userdetails(Username, Email_Register);
-                    FirebaseDatabase.getInstance().getReference("User")
+                    FirebaseDatabase.getInstance().getReference("users")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

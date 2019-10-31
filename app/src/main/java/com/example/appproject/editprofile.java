@@ -1,5 +1,6 @@
 package com.example.appproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -8,12 +9,18 @@ import com.google.android.material.snackbar.Snackbar;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -26,6 +33,7 @@ import android.widget.TextView;
 import android.view.Menu;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class editprofile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,20 +41,61 @@ public class editprofile extends AppCompatActivity
     EditText ed;
     Spinner sp;
     TextView t;
+    String[] options=new String[10];
+    Context c=this;
+
+    private DatabaseReference mDatabase;
+    private FirebaseDatabase data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference data1 = mDatabase.child("users");
+        data1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int j=0;
+
+                for (DataSnapshot locationSnapshot : dataSnapshot.getChildren()) {
+                    Object data = locationSnapshot.getValue();
+                    String s = null;
+                    if (data != null) {
+                        s = data.toString();
+                    }
+                    options[j]=s;
+                    j++;
+                    Log.d("Value", "Bhiya ji puri string to h ye :"+s);
+                    String[] t  =s.split(",");
+                    for(int i=0 ;i<t.length;i++){
+                        Log.d("Value", "Bhaiya ji after comma sperated"+t[i]);
+                        String[] v = t[i].split("=");
+                        if(v[0].equalsIgnoreCase("email")){
+                            Log.d("Value", "email: " + v[1]);
+                        }
+                    }
+                }
+                String[] op= new String[j];
+                for (int i=0;i<j;i++){
+                    op[i]=options[i];
+                }
+                sp = findViewById(R.id.blockspinner);
+
+                ArrayAdapter<String> spinnerD = new ArrayAdapter<String>(c,R.layout.spinner1,op);
+                spinnerD.setDropDownViewResource(R.layout.spinner1);
+                sp.setAdapter(spinnerD);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         setContentView(R.layout.activity_editprofile);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -84,6 +133,13 @@ public class editprofile extends AppCompatActivity
         ArrayAdapter<String> spinnerC = new ArrayAdapter<String>(this,R.layout.spinner1,gender);
         spinnerC.setDropDownViewResource(R.layout.spinner1);
         sp.setAdapter(spinnerC);
+        sp = findViewById(R.id.blockspinner);
+
+        ArrayAdapter<String> spinnerD = new ArrayAdapter<String>(this,R.layout.spinner1,options);
+//        spinnerD.setDropDownViewResource(R.layout.spinner1);
+//        sp.setAdapter(spinnerD);
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference demoRef = rootRef.child("users");
     }
 
     @Override
@@ -124,23 +180,25 @@ public class editprofile extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        switch(id)
+        {
+            case R.id.nav_edit:
+                Intent i = new Intent(this,editprofile.class);
+                startActivity(i);
+                return true;
 
-        } else if (id == R.id.nav_slideshow) {
+            case R.id.nav_about:
+                Intent i1=new Intent(this,About.class);
+                startActivity(i1);
+                return true;
 
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            case R.id.nav_logout:
+                Intent i2=new Intent(this,LoginActivity.class);
+                startActivity(i2);
+                return true;
+            default:
+                return true;
         }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
     protected void edit(View v){
         Log.d("dekho", "bhiya button to dab gya");
@@ -179,5 +237,6 @@ public class editprofile extends AppCompatActivity
     }
 
 
-
+    public void block(View view) {
+    }
 }
