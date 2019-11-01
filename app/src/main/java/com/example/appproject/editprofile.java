@@ -1,10 +1,9 @@
 package com.example.appproject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
+
 
 import android.util.Log;
 import android.view.View;
@@ -16,6 +15,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +35,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+
+
 public class editprofile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,10 +44,11 @@ public class editprofile extends AppCompatActivity
     Spinner sp;
     TextView t;
     String[] options=new String[10];
-    Context c=this;
 
+    final Context context = this;
     private DatabaseReference mDatabase;
     private FirebaseDatabase data;
+    private ValueEventListener vl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,43 +59,39 @@ public class editprofile extends AppCompatActivity
         data1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int j=0;
-
+                int j = 0;
                 for (DataSnapshot locationSnapshot : dataSnapshot.getChildren()) {
-                    Object data = locationSnapshot.getValue();
-                    String s = null;
-                    if (data != null) {
-                        s = data.toString();
-                    }
-                    options[j]=s;
-                    j++;
-                    Log.d("Value", "Bhiya ji puri string to h ye :"+s);
-                    String[] t  =s.split(",");
-                    for(int i=0 ;i<t.length;i++){
-                        Log.d("Value", "Bhaiya ji after comma sperated"+t[i]);
-                        String[] v = t[i].split("=");
-                        if(v[0].equalsIgnoreCase("email")){
-                            Log.d("Value", "email: " + v[1]);
-                        }
-                    }
-                }
-                String[] op= new String[j];
-                for (int i=0;i<j;i++){
-                    op[i]=options[i];
-                }
-                sp = findViewById(R.id.blockspinner);
 
-                ArrayAdapter<String> spinnerD = new ArrayAdapter<String>(c,R.layout.spinner1,op);
-                spinnerD.setDropDownViewResource(R.layout.spinner1);
-                sp.setAdapter(spinnerD);
+                    String k = locationSnapshot.getKey();
+                    if (!k.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        options[j] = k;
+                        j++;
+                    }
+
+
+                    String[] op = new String[j];
+                    for (int i = 0; i < j; i++) {
+                        op[i] = options[i];
+                    }
+                    sp = findViewById(R.id.blockspinner);
+
+                    ArrayAdapter<String> spinnerD = new ArrayAdapter<String>(context, R.layout.spinner1, op);
+                    spinnerD.setDropDownViewResource(R.layout.spinner1);
+                    sp.setAdapter(spinnerD);
+                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
         setContentView(R.layout.activity_editprofile);
+        findViewById(R.id.b).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                block(view);
+            }
+        });
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -236,7 +235,60 @@ public class editprofile extends AppCompatActivity
         startActivity(inte);
     }
 
+    protected void rem(DatabaseReference d,ValueEventListener kl){
+        d.removeEventListener(kl);
+    }
+    protected void block(View V){
+        final Object[] v = new Object[1];
+        String b = new String();
+        final String[] kl=new String[1];
+        sp = findViewById(R.id.blockspinner);
+        final String value = sp.getSelectedItem().toString();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference data1 = mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-    public void block(View view) {
+        vl = data1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount()<3){
+                    kl[0]= "User"+1;
+                    FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("BlockList").setValue(1);
+                    FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("BlockList").child(kl[0]).setValue(value);
+                    rem(data1, vl);
+                    return;
+
+                }
+                else{
+                    for (DataSnapshot locationSnapshot : dataSnapshot.getChildren()) {
+
+                        String k = locationSnapshot.getKey();
+                        if(k.equals("BlockList")) {
+                            Log.d("galti",locationSnapshot.getValue().toString());
+                            DatabaseReference d = locationSnapshot.getRef();
+                            int h = ((int) locationSnapshot.getChildrenCount())+1;
+                            kl[0] = "User" + h;
+
+                            FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("BlockList").child(kl[0]).setValue(value);
+                            rem(data1, vl);
+                            return;
+                        }
+
+
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 }
