@@ -35,14 +35,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
-
 public class editprofile extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     EditText ed;
     Spinner sp;
     TextView t;
+    int blockcount,flag=0;
     String[] options=new String[10];
 
     final Context context = this;
@@ -195,12 +194,30 @@ public class editprofile extends AppCompatActivity
                 Intent i2=new Intent(this,LoginActivity.class);
                 startActivity(i2);
                 return true;
+            case R.id.nav_request:
+                Intent i3=new Intent(this,MainActivity.class);
+                startActivity(i3);
+                return true;
             default:
                 return true;
         }
     }
+    protected boolean check(final String  z, final String u){
+        if(u.equals(z))
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+
+
+
+
+
+    }
     protected void edit(View v){
-        Log.d("dekho", "bhiya button to dab gya");
+
         t = findViewById(R.id.yournametext);
         t.setVisibility(View.GONE);
         ed = findViewById(R.id.yournameedit);
@@ -245,35 +262,61 @@ public class editprofile extends AppCompatActivity
         sp = findViewById(R.id.blockspinner);
         final String value = sp.getSelectedItem().toString();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference d2=mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("BlockList");
+        flag=0;
+
+
+
         final DatabaseReference data1 = mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         vl = data1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getChildrenCount()<3){
-                    kl[0]= "User"+1;
-                    FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("BlockList").setValue(1);
+                if (dataSnapshot.getChildrenCount() < 3) {
+                    kl[0] = "User" + 1;
+                    FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("BlockCount").setValue(1);
                     FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("BlockList").child(kl[0]).setValue(value);
                     rem(data1, vl);
                     return;
 
-                }
-                else{
+                } else {
                     for (DataSnapshot locationSnapshot : dataSnapshot.getChildren()) {
 
                         String k = locationSnapshot.getKey();
-                        if(k.equals("BlockList")) {
-                            Log.d("galti",locationSnapshot.getValue().toString());
-                            DatabaseReference d = locationSnapshot.getRef();
-                            int h = ((int) locationSnapshot.getChildrenCount())+1;
-                            kl[0] = "User" + h;
+                        if (k.equals("BlockCount")) {
+                            blockcount = Integer.parseInt(locationSnapshot.getValue().toString());
 
-                            FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("BlockList").child(kl[0]).setValue(value);
-                            rem(data1, vl);
-                            return;
                         }
+                        if (k.equals("BlockList")) {
+                            flag = 0;
+                            for (DataSnapshot gh : locationSnapshot.getChildren()) {
+                                String df = gh.getValue().toString();
+                                boolean t = check(df, value);
+                                if (t == true) {
 
 
+                                    rem(data1, vl);
+                                    Toast.makeText(context, "Already blocked!! Have Fun!!! ", Toast.LENGTH_SHORT).show();
+                                    return;
+                                } else {
+                                    flag = 1;
+                                }
+
+                            }
+
+                            if (flag == 1) {
+                                Log.d("galti", locationSnapshot.getValue().toString());
+                                DatabaseReference d = locationSnapshot.getRef();
+                                int h = blockcount + 1;
+                                kl[0] = "User" + h;
+                                FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("BlockCount").setValue(h);
+
+                                FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("BlockList").child(kl[0]).setValue(value);
+                                rem(data1, vl);
+                                return;
+                            }
+
+                        }
 
                     }
 
@@ -288,7 +331,6 @@ public class editprofile extends AppCompatActivity
             }
         });
 
-
-
     }
+
 }
