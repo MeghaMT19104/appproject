@@ -36,4 +36,6 @@
     <string name="traveller">Traveller</string>
     <string name="title_activity_past_poll_activity">past_poll_activity</string>
     <string name="hosted_by">Hosted By</string>
+
+    <string name="input_placeholder">Write a message</string>
 </resources>

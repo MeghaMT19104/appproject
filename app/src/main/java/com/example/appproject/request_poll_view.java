@@ -96,6 +96,11 @@ public class request_poll_view extends Fragment implements OnListFragmentInterac
                                             requested_polls.setParent(parent);
                                             requested_polls.setKey(key);
                                             requested_polls.setCreater_uid(polls1.getCreater_uid());
+                                            requested_polls.setCreater_uid(polls1.getDest());
+                                            requested_polls.setCreater_uid(polls1.getPrice());
+                                            requested_polls.setCreater_uid(polls1.getTime());
+                                            requested_polls.setCreater_uid(polls1.getDate());
+
                                             mPolls.add(requested_polls);
                                         } catch (Exception e) {
                                             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();

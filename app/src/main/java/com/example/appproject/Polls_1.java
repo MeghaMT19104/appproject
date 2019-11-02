@@ -121,4 +121,19 @@ class Polls_1 {
     }
 
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }
