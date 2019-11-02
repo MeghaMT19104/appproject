@@ -16,6 +16,7 @@
 
 
                 <ImageView
+                    android:id="@+id/Edit_pic"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
@@ -68,7 +69,8 @@
                         android:padding="8dp"
                         android:text="5"
                         android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:id="@+id/rating"/>
 
 
                 <ImageView
@@ -77,7 +79,8 @@
                     android:layout_gravity="bottom|right|center_horizontal"
                     android:clickable="true"
                     android:onClick="edit"
-                    android:src="@drawable/edit1" />
+                    android:src="@drawable/edit1"
+                    android:id="@+id/pen"/>
             </LinearLayout>
 
 
@@ -267,33 +270,32 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@color/colorPrimary"
-                    android:onClick="send"
                     android:text="Save"
                     android:textColor="@color/white"
                     android:visibility="gone" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical">-->
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/blockspinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                <!--<androidx.appcompat.widget.AppCompatSpinner-->
+                    <!--android:id="@+id/blockspinner"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_horizontal"-->
 
-                    android:textColor="@color/white" />
+                    <!--android:textColor="@color/white" />-->
 
-                <Button
-                    android:id="@+id/b"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="block"
-                    android:text="BLOCK" />
+                <!--<Button-->
+                    <!--android:id="@+id/b"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:onClick="block"-->
+                    <!--android:text="BLOCK" />-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
 
         </LinearLayout>
