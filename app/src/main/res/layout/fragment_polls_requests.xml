@@ -135,7 +135,7 @@
 
             <TextView
                 android:id="@+id/seat3"
-                android:layout_width="156dp"
+                android:layout_width="84dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/card_margin"
                 android:text="@string/traveller"
@@ -147,6 +147,14 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/card_margin"
                 android:text="Add+"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/card_margin"
+                android:text="Profile"
                 android:textAlignment="center" />
          
         </LinearLayout>

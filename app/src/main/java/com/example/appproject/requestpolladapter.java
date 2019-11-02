@@ -49,6 +49,15 @@ public class requestpolladapter extends RecyclerView.Adapter<requestpolladapter.
         holder.name.setText("" + mValues.get(position).getName());
         //holder.seats.setText("Seats Available :"+mValues.get(position).getSeat());
 
+        holder.profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+            }
+        });
+
 
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +151,7 @@ public class requestpolladapter extends RecyclerView.Adapter<requestpolladapter.
         public final TextView date;
         public final TextView seats;
         public final Button btnAdd;
+        public final Button profile;
         public TextView name;
         public Polls_1 mItem;
         String added_name;
@@ -157,6 +167,7 @@ public class requestpolladapter extends RecyclerView.Adapter<requestpolladapter.
             seats = (TextView) view.findViewById(R.id.seat);
             name = (TextView) view.findViewById(R.id.seat3);
             btnAdd = view.findViewById(R.id.btnAdd);
+            profile = view.findViewById(R.id.profile);
         }
 
         @Override
