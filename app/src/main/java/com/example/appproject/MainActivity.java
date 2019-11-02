@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     //variables
     private Button past;
     private Button present;
+    private Button map;
     public static int frag=0;
     public static FragmentManager fm;
     public static Fragment f;
@@ -107,11 +108,12 @@ public class MainActivity extends AppCompatActivity
         }
         past=(Button)findViewById(R.id.past_button);
         present=(Button)findViewById(R.id.present_button);
+        map=(Button)findViewById(R.id.map_button);
         past.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fm.beginTransaction().remove(f).commit();
-                f=new past_poll_view();
+                f=new request_poll_view();
                 fm.beginTransaction().add(R.id.fragment_container,f).commit();
                 MainActivity.frag=1;
 
@@ -125,6 +127,13 @@ public class MainActivity extends AppCompatActivity
                 fm.beginTransaction().add(R.id.fragment_container,f).commit();
                 MainActivity.frag=0;
 
+            }
+        });
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), locattion.class);
+                startActivity(myIntent);
             }
         });
     }

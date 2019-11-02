@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/past_button" />
+            android:text="REQUESTS" />
 
         <Button
             android:id="@+id/present_button"
@@ -41,5 +41,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="@string/present_button" />
+        <Button
+            android:id="@+id/map_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Good to go" />
+
     </LinearLayout>
 </LinearLayout>
